@@ -37,6 +37,7 @@ namespace RedditSharp.Things
         private const string FlairListUrl = "/r/{0}/api/flairlist.json";
         private const string CommentsUrl = "/r/{0}/comments.json";
         private const string SearchUrl = "/r/{0}/search.json?q={1}&restrict_sr=on&sort={2}&t={3}";
+        private const string GetAllViaSearchUrl = "/r/{0}/search.json?restrict_sr=on&t=all";
 
         [JsonIgnore]
         private Reddit Reddit { get; set; }
@@ -156,6 +157,11 @@ namespace RedditSharp.Things
         public Listing<Post> Search(string terms)
         {
             return new Listing<Post>(Reddit, string.Format(SearchUrl, Name, Uri.EscapeUriString(terms), "relevance", "all"), WebAgent);
+        }
+
+        public Listing<Post> GetAllViaSearch()
+        {
+            return new Listing<Post>(Reddit, string.Format(GetAllViaSearchUrl, Name), WebAgent);
         }
 
         public SubredditSettings Settings
